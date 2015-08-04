@@ -18,4 +18,20 @@ class Exercise$Test extends FlatSpec {
     }
   }
 
+  "isSorted" should "checks whether an `Array[A]` is sorted according to " +
+    "a given comparison function" in {
+    assertResult(true) {
+      isSorted[Int](Array(1, 2, 3, 4, 5), _ < _)
+    }
+
+    assertResult(false) {
+      isSorted[Int](Array(1, 2, 3, 4, 5), _ > _)
+    }
+
+    assertResult(false) {
+      isSorted[Int](Array(1, 6, 3, 4, 5), _ > _)
+    }
+  }
+
+
 }
