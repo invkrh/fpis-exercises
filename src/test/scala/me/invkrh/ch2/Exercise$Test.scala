@@ -1,7 +1,7 @@
 package me.invkrh.ch2
 
 import Exercise._
-import org.scalatest.FlatSpec
+import org.scalatest.{FunSuite, FlatSpec}
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,16 +10,15 @@ import org.scalatest.FlatSpec
  * Time: 01:26
  */
 
-class Exercise$Test extends FlatSpec {
+class Exercise$Test extends FunSuite {
 
-  "fib" should "return a correct Fibonacci number based on n" in {
+  test("2.1: fib") {
     assertResult(List(0, 1, 1, 2, 3, 5, 8, 13, 21, 34)) {
       0 to 9 map fib toList
     }
   }
 
-  "isSorted" should "checks whether an `Array[A]` is sorted according to " +
-    "a given comparison function" in {
+  test("2.2: isSorted") {
     assertResult(true) {
       isSorted[Int](Array(1, 2, 3, 4, 5), _ < _)
     }
@@ -32,6 +31,4 @@ class Exercise$Test extends FlatSpec {
       isSorted[Int](Array(1, 6, 3, 4, 5), _ > _)
     }
   }
-
-
 }
