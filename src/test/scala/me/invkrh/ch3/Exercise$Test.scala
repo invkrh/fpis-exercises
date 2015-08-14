@@ -193,6 +193,10 @@ class Exercise$Test extends FunSuite {
 
   test("3.24: hasSubsequence") {
     assertResult(true) {
+      hasSubsequence(List(1, 2, 2, 3, 4), List(2, 3))
+    }
+
+    assertResult(true) {
       hasSubsequence(List(1, 2, 3, 4), List(1, 2))
     }
 

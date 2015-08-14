@@ -294,13 +294,13 @@ object Exercise {
   @tailrec
   def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
     @tailrec
-    def testEqual(as: List[A], bs: List[A]): Boolean = {
+    def checkInit(as: List[A], bs: List[A]): Boolean = {
       bs match {
         case Nil => true
         case Cons(y, ys) =>
           as match {
             case Nil => false
-            case Cons(x, xs) => if (x == y) testEqual(xs, ys) else false
+            case Cons(x, xs) => if (x == y) checkInit(xs, ys) else false
           }
       }
     }
@@ -311,8 +311,7 @@ object Exercise {
         sup match {
           case Nil => false
           case Cons(x, xs) =>
-            if (x == y) testEqual(xs, ys)
-            else hasSubsequence(xs, sub)
+            if (checkInit(sup, sub)) true else hasSubsequence(xs, sub)
         }
     }
   }
