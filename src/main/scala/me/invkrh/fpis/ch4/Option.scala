@@ -1,5 +1,9 @@
 package me.invkrh.fpis.ch4
 
+import me.invkrh.fpis.ch3.Exercise.foldRight
+import me.invkrh.fpis.ch3.{Cons, List}
+import me.invkrh.fpis.ch4.Exercise._
+
 /**
  * Created with IntelliJ IDEA.
  * User: invkrh
@@ -34,13 +38,13 @@ sealed trait Option[+A] {
 
   def getOrElse[B >: A](default: => B): B =
     this match {
-      case Some(x) => x
-      case None => default
+      case Some(x) => x;
+      case None => default;
     }
 
   def orElse[B >: A](ob: => Option[B]): Option[B] =
     this match {
-      case Some(x) => this
+      case Some(x) => Some(x)
       case None => ob
     }
 
@@ -53,5 +57,40 @@ sealed trait Option[+A] {
 
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
+
+object Option {
+
+  def Try[A](a: => A): Option[A] =
+    try Some(a)
+    catch {
+      case e: Exception => None
+    }
+
+  /**
+   * 4.4
+   * Write a function sequence that combines a list of Option s into one Option containing
+   * a list of all the Some values in the original list.
+   * If the original list contains None even once, the result of the function should be None;
+   * otherwise the result should be Some with a list of all the values.
+   */
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    traverse(a)(x => x)
+  }
+
+  /**
+   * 4.5
+   * Implement this function. It’s straightforward to do using `map` and `sequence`, but try
+   * for a more efficient implementation that only looks at the list once.
+   * In fact, implement `sequence` in terms of `traverse`.
+   */
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
+    val z: Option[List[B]] = Some(List[B]())
+    foldRight(a, z) {
+      case (elem, acc) => map2(acc, f(elem)) {
+        case (l, v) => Cons(v, l)
+      }
+    }
+  }
+}
 
 
