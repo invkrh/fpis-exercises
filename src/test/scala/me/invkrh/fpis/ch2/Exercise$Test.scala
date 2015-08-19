@@ -1,4 +1,4 @@
-package me.invkrh.ch2
+package me.invkrh.fpis.ch2
 
 import Exercise._
 import org.scalatest.{FunSuite, FlatSpec}

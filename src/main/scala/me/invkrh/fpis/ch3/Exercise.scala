@@ -1,6 +1,6 @@
-package me.invkrh.ch3
+package me.invkrh.fpis.ch3
 
-import me.invkrh.ch3.List._
+import List._
 
 import scala.annotation.tailrec
 
@@ -295,25 +295,21 @@ object Exercise {
   def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
     @tailrec
     def checkInit(as: List[A], bs: List[A]): Boolean = {
-      bs match {
-        case Nil => true
-        case Cons(y, ys) =>
-          as match {
-            case Nil => false
-            case Cons(x, xs) => if (x == y) checkInit(xs, ys) else false
-          }
+      (as, bs) match {
+        case (Nil, _) => false
+        case (_, Nil) => true
+        case (Cons(x, xs), Cons(y, ys)) =>
+          if (x == y) checkInit(xs, ys) else false
       }
     }
 
-    sub match {
-      case Nil => true
-      case Cons(y, ys) =>
-        sup match {
-          case Nil => false
-          case Cons(x, xs) =>
-            if (checkInit(sup, sub)) true else hasSubsequence(xs, sub)
-        }
+    (sup, sub) match {
+      case (Nil, _) => false
+      case (_, Nil) => true
+      case (Cons(x, xs), _) =>
+        if (checkInit(sup, sub)) true else hasSubsequence(xs, sub)
     }
+
   }
 
   /**

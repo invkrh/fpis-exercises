@@ -1,4 +1,4 @@
-package me.invkrh.ch3
+package me.invkrh.fpis.ch3
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,6 +1,7 @@
-package me.invkrh.ch3
+package me.invkrh.fpis.ch3
 
-import me.invkrh.ch3.Exercise._
+import Exercise._
+import me.invkrh.fpis.ch3.Exercise.{WithTreeFold, WithFlatMap, FoldLeft, WithFoldLeft}
 import org.scalatest.FunSuite
 
 /**
