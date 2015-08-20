@@ -1,7 +1,5 @@
 package me.invkrh.fpis.ch4
 
-import me.invkrh.fpis.ch3.Exercise.foldRight
-import me.invkrh.fpis.ch3.{Cons, List}
 
 /**
  * Created with IntelliJ IDEA.
@@ -73,8 +71,8 @@ object Either {
 
   def traverse[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = {
     val z: Either[E, List[B]] = Right(List[B]())
-    foldRight(as, z) {
-      case (elem, acc) => acc.map2(f(elem)) { (l, v) => Cons(v, l) }
+    as.foldRight(z) {
+      case (elem, acc) => acc.map2(f(elem)) { (l, v) => v :: l }
     }
   }
 

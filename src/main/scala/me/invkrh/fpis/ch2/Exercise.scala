@@ -22,7 +22,7 @@ object Exercise {
     @tailrec
     def fibRec(n: Int, accSmallOne: Int, accLargeOne: Int): Int = {
       if (n == 0) accSmallOne
-      else if (n == 1) accLargeOne
+      // else if (n == 1) accLargeOne // this case is included in the lash branch
       else fibRec(n - 1, accLargeOne, accSmallOne + accLargeOne)
     }
     fibRec(n, 0, 1)
@@ -50,7 +50,9 @@ object Exercise {
    * Write the implementation of the following function
    */
   def curry[A, B, C](f: (A, B) => C): A => B => C = {
-    (a: A) => (b: B) => f(a, b)
+    // no need for typing a, b, they can be inferred from the function's return type
+    //(a: A) => (b: B) => f(a, b)
+    a => b => f(a, b)
   }
 
   /**
@@ -58,7 +60,9 @@ object Exercise {
    * Implement `uncurry` , which reverses the transformation of `curry`.
    */
   def uncurry[A, B, C](f: A => B => C): (A, B) => C = {
-    (a: A, b: B) => f(a)(b)
+    // same as 2.3
+    //(a: A, b: B) => f(a)(b)
+    (a, b) => f(a)(b)
   }
 
   /**
@@ -66,7 +70,9 @@ object Exercise {
    * Implement the higher-order function that composes two functions
    */
   def compose[A, B, C](f: B => C, g: A => B): A => C = {
-    (a: A) => f(g(a))
+    // same as 2.3
+    //(a: A) => f(g(a))
+    a => f(g(a))
   }
 
 }

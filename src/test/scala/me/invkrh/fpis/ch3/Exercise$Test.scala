@@ -1,7 +1,7 @@
 package me.invkrh.fpis.ch3
 
 import Exercise._
-import me.invkrh.fpis.ch3.Exercise.{WithTreeFold, WithFlatMap, FoldLeft, WithFoldLeft}
+import me.invkrh.fpis.ch3.Exercise.{WithTreeFold, WithFlatMap, WithFoldLeft}
 import org.scalatest.FunSuite
 
 /**
@@ -124,7 +124,7 @@ class Exercise$Test extends FunSuite {
 
   test("3.13: foldLeft(Right) in terms of foldRight(Left)") {
     assertResult(6) {
-      FoldLeft.foldLeft(List(1, 2, 3), 0)(_ + _)
+      foldLeftViaFoldRight_1(List(1, 2, 3), 0)(_ + _)
     }
 
     assertResult(6) {
@@ -134,7 +134,7 @@ class Exercise$Test extends FunSuite {
 
   test("3.14: append") {
     assertResult(List(1, 2, 3, 4)) {
-      append(List(1, 2, 3), 4)
+      appendViaFoldRight(List(1, 2, 3), List(4))
     }
   }
 

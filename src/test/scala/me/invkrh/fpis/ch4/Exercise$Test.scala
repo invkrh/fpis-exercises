@@ -1,8 +1,6 @@
 package me.invkrh.fpis.ch4
 
 import org.scalatest.FunSuite
-import me.invkrh.fpis.ch3.List
-import me.invkrh.fpis.ch3.Exercise.length
 import Exercise._
 
 /**
@@ -187,7 +185,7 @@ class Exercise$Test extends FunSuite {
     assertResult(2) {
       mkPerson("", -1) match {
         case Right(p) => println(p)
-        case Left(e) => length(e)
+        case Left(e) => e.size
       }
     }
   }

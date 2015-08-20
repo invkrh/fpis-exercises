@@ -1,7 +1,5 @@
 package me.invkrh.fpis.ch4
 
-import me.invkrh.fpis.ch3.Exercise.foldRight
-import me.invkrh.fpis.ch3.{Cons, List}
 import me.invkrh.fpis.ch4.Exercise._
 
 /**
@@ -31,10 +29,12 @@ sealed trait Option[+A] {
     }
 
   def flatMap[B](f: A => Option[B]): Option[B] =
-    this match {
-      case Some(x) => f(x)
-      case None => None
-    }
+    map(f) getOrElse None
+
+  //    this match {
+  //      case Some(x) => f(x)
+  //      case None => None
+  //    }
 
   def getOrElse[B >: A](default: => B): B =
     this match {
@@ -43,16 +43,20 @@ sealed trait Option[+A] {
     }
 
   def orElse[B >: A](ob: => Option[B]): Option[B] =
-    this match {
-      case Some(x) => Some(x)
-      case None => ob
-    }
+    this map (Some(_)) getOrElse ob
+
+  //    this match {
+  //      case None => ob
+  //      case _ => this
+  //    }
 
   def filter(f: A => Boolean): Option[A] =
-    this match {
-      case Some(x) if f(x) => Some(x)
-      case _ => None
-    }
+    flatMap(a => if (f(a)) Some(a) else None)
+
+  //    this match {
+  //      case Some(x) if f(x) => Some(x)
+  //      case _ => None
+  //    }
 }
 
 case class Some[+A](get: A) extends Option[A]
@@ -85,9 +89,9 @@ object Option {
    */
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
     val z: Option[List[B]] = Some(List[B]())
-    foldRight(a, z) {
+    a.foldRight(z) {
       case (elem, acc) => map2(acc, f(elem)) {
-        case (l, v) => Cons(v, l)
+        case (l, v) => v :: l
       }
     }
   }
