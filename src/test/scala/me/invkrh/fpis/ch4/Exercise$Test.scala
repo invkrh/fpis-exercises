@@ -188,5 +188,22 @@ class Exercise$Test extends FunSuite {
         case Left(e) => e.size
       }
     }
+
+    val suc1: Partial[String, Int] = Success(1)
+    val suc2: Partial[String, Int] = Success(2)
+    val err1: Partial[String, Int] = Errors(Seq("error1"))
+    val err2: Partial[String, Int] = Errors(Seq("error2"))
+
+    assertResult(Errors(Seq("error1", "error2"))) {
+      err1.map2(err2)(_ + _)
+    }
+
+    assertResult(Errors(Seq("error1", "error2"))) {
+      Partial.sequence(List(suc1, err1, err2, suc2))
+    }
+
+    assertResult(Success(List(1, 2))) {
+      Partial.sequence(List(suc1, suc2))
+    }
   }
 }
