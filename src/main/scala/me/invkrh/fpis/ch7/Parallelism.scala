@@ -117,7 +117,7 @@ object Parallelism {
     def asyncF[A, B](f: A => B): A => Par[B] = a => lazyUnit(f(a))
 
     def map[A, B](pa: Par[A])(f: A => B): Par[B] =
-      map2(pa, unit(()))((a, _) => f(a))
+      map2(pa, unit())((a, _) => f(a))
 
     def sortPar(parList: Par[List[Int]]) = map(parList)(_.sorted)
 
@@ -333,7 +333,7 @@ object Parallelism {
      * implement a function with the same signature as `map2`, but using `flatMap` and `unit`?
      * How is its meaning different than that of `map2`?
      */
-    def map2[A, B, C](a: Par[A], b: Par[B])(f: (A, B) => C): Par[C] = {
+    def map2ViaFlatMap[A, B, C](a: Par[A], b: Par[B])(f: (A, B) => C): Par[C] = {
       flatMap(a) {
         va => flatMap(b) {
           vb => unit(f(va, vb))

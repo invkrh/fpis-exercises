@@ -356,4 +356,12 @@ object Stream {
       case Some((value, state)) => Stream.cons(value, unfold(state)(f))
       case None => Empty
     }
+
+  /**
+   * For exercise in ch8
+   */
+  def from(n: Int): Stream[Int] =
+    unfold(n) {
+      n => Some(n, n + 1)
+    }
 }
